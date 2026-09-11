@@ -1,0 +1,13 @@
+.vercel/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+qa-screenshots/
+.playwright-cli/
+dist/
+output/
+server-*.log
+docs/*.docx
