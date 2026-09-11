@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPTI UI 第一轮视觉方案预览</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #151821;
+      --muted: #69707f;
+      --line: #d8dde7;
+      --paper: #f7f8fb;
+      --white: #ffffff;
+      --gold: #b5904f;
+      --cyan: #4eaaa5;
+      --red: #9c4f45;
+      --green: #526f62;
+      --shadow: 0 22px 54px rgba(24, 28, 36, 0.14);
+      font-family:
+        "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background:
+        linear-gradient(90deg, rgba(21, 24, 33, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(21, 24, 33, 0.035) 1px, transparent 1px),
+        #f7f8fb;
+      background-size: 28px 28px;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .brief {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+      gap: 24px;
+      align-items: end;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .brief-copy {
+      max-width: 720px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      overflow-wrap: anywhere;
+    }
+
+    .rules {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border: 1px solid #d9cdb5;
+      border-radius: 8px;
+      background: #fffaf1;
+      color: #5d513f;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .rules strong {
+      color: var(--ink);
+    }
+
+    .option {
+      margin-top: 28px;
+      padding: 22px;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 16px 34px rgba(24, 28, 36, 0.08);
+    }
+
+    .option-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .option h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+    }
+
+    .option-lead {
+      max-width: 760px;
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .fit {
+      display: grid;
+      gap: 6px;
+      min-width: 190px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcff;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .fit strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .mockup-block {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .mockup-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .phone {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      min-height: 620px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 8px solid #11141d;
+      box-shadow: 0 24px 46px rgba(15, 18, 25, 0.24);
+    }
+
+    .phone-inner {
+      min-height: 604px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .top-row,
+    .split-row,
+    .action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .tag {
+      width: fit-content;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .micro {
+      min-width: 0;
+      overflow: hidden;
+      color: inherit;
+      font-size: 12px;
+      opacity: 0.72;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .title {
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .panel {
+      padding: 14px;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: grid;
+      place-items: center;
+      min-height: 46px;
+      border-radius: 8px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .btn.secondary {
+      font-weight: 800;
+    }
+
+    .progress {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 38%;
+      border-radius: inherit;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      padding: 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .choice strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .avatar-stage {
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .avatar-stage img {
+      width: min(190px, 70%);
+      aspect-ratio: 1;
+      object-fit: contain;
+    }
+
+    .result-name {
+      font-size: 31px;
+      line-height: 1.1;
+    }
+
+    .copy {
+      color: inherit;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mini-cell {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .mini-cell strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .option-a .phone-inner {
+      color: #f4efe4;
+      background:
+        linear-gradient(180deg, rgba(12, 17, 29, 0.92), rgba(7, 10, 18, 0.98)),
+        linear-gradient(90deg, rgba(78, 170, 165, 0.12) 1px, transparent 1px);
+      background-size: auto, 18px 18px;
+    }
+
+    .option-a .tag {
+      color: #e1c27c;
+      border: 1px solid rgba(225, 194, 124, 0.42);
+      background: rgba(225, 194, 124, 0.08);
+    }
+
+    .option-a .panel,
+    .option-a .choice,
+    .option-a .mini-cell {
+      border: 1px solid rgba(120, 207, 200, 0.22);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .option-a .title,
+    .option-a .result-name {
+      color: #ffffff;
+    }
+
+    .option-a .subtitle,
+    .option-a .copy {
+      color: #d8d1c4;
+    }
+
+    .option-a .progress {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .option-a .progress span,
+    .option-a .btn.primary {
+      background: linear-gradient(90deg, #72d4ce, #c5a46a);
+      color: #121722;
+    }
+
+    .option-a .btn.secondary {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #f4efe4;
+    }
+
+    .option-a .choice.is-selected {
+      border-color: rgba(225, 194, 124, 0.78);
+      background: rgba(197, 164, 106, 0.17);
+    }
+
+    .option-a .avatar-stage {
+      background: #f6f2ea;
+      border: 1px solid rgba(225, 194, 124, 0.55);
+    }
+
+    .option-a .mini-cell strong,
+    .option-a .choice strong {
+      color: #72d4ce;
+    }
+
+    .option-b .phone-inner {
+      color: #171a21;
+      background:
+        linear-gradient(180deg, #ffffff, #f2f5f7),
+        linear-gradient(135deg, rgba(78, 170, 165, 0.06), transparent);
+    }
+
+    .option-b .tag {
+      color: #254f4d;
+      border: 1px solid rgba(78, 170, 165, 0.32);
+      background: #e7f3f2;
+    }
+
+    .option-b .panel,
+    .option-b .choice,
+    .option-b .mini-cell {
+      border: 1px solid #d9dee6;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(22, 27, 36, 0.06);
+    }
+
+    .option-b .subtitle,
+    .option-b .copy {
+      color: #69707f;
+    }
+
+    .option-b .progress {
+      background: #e5e9ef;
+    }
+
+    .option-b .progress span,
+    .option-b .btn.primary {
+      background: #17202b;
+      color: #ffffff;
+    }
+
+    .option-b .btn.secondary {
+      color: #17202b;
+      background: #eef2f5;
+    }
+
+    .option-b .choice.is-selected {
+      border-color: rgba(181, 144, 79, 0.68);
+      background: #fbf5ea;
+    }
+
+    .option-b .avatar-stage {
+      background:
+        linear-gradient(180deg, #fff, #f8fafb);
+      border: 1px solid #d9dee6;
+    }
+
+    .option-b .mini-cell strong,
+    .option-b .choice strong {
+      color: #9c4f45;
+    }
+
+    .option-c .phone-inner {
+      color: #f7f3ea;
+      background:
+        linear-gradient(180deg, rgba(38, 53, 49, 0.97), rgba(20, 27, 31, 0.99)),
+        linear-gradient(135deg, rgba(224, 200, 148, 0.08) 0 24%, transparent 24% 100%);
+    }
+
+    .option-c .tag {
+      color: #f0d99e;
+      border: 1px solid rgba(240, 217, 158, 0.4);
+      background: rgba(240, 217, 158, 0.08);
+    }
+
+    .option-c .panel,
+    .option-c .choice,
+    .option-c .mini-cell {
+      border: 1px solid rgba(219, 224, 213, 0.2);
+      background: rgba(255, 255, 255, 0.065);
+    }
+
+    .option-c .title,
+    .option-c .result-name {
+      color: #fffaf0;
+    }
+
+    .option-c .result-name,
+    .option-c .subtitle {
+      text-align: center;
+    }
+
+    .option-c .subtitle,
+    .option-c .copy {
+      color: #d8ded2;
+    }
+
+    .option-c .progress {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.13);
+      border-radius: 0;
+    }
+
+    .option-c .progress span,
+    .option-c .btn.primary {
+      background: #d9bd78;
+      color: #17201d;
+    }
+
+    .option-c .btn.secondary {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #f7f3ea;
+    }
+
+    .option-c .choice.is-selected {
+      border-color: rgba(217, 189, 120, 0.8);
+      background: rgba(217, 189, 120, 0.15);
+    }
+
+    .option-c .avatar-stage {
+      background: #f7f5ed;
+      border: 1px solid rgba(217, 189, 120, 0.58);
+    }
+
+    .option-c .mini-cell strong,
+    .option-c .choice strong {
+      color: #d9bd78;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .route span {
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .route span.is-active {
+      background: currentColor;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .note {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcff;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    @media (max-width: 980px) {
+      .brief,
+      .option-head,
+      .mockup-grid,
+      .notes {
+        grid-template-columns: 1fr;
+      }
+
+      .fit {
+        min-width: 0;
+      }
+
+      .phone {
+        max-width: 100%;
+        min-height: 560px;
+      }
+
+      .phone-inner {
+        min-height: 544px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      .brief,
+      .option {
+        padding: 16px;
+      }
+
+      .phone {
+        border-width: 6px;
+        border-radius: 16px;
+      }
+
+      .phone-inner {
+        padding: 14px;
+      }
+
+      .title {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="brief">
+      <div>
+        <p class="kicker">GPTI H5 UI OPTIONS · FIRST PASS</p>
+        <h1>围绕“异界开局人格测试”的三套移动端视觉方向</h1>
+        <p class="brief-copy">
+          这页只用于选择 UI 方向。三套方案都保留现有 GPTI 内容、24 题流程、16 型主结果、隐藏特质与分享闭环，不改题目、选项、结果文案、评分体系或 CloudBase 统计口径。
+        </p>
+      </div>
+      <div class="rules">
+        <strong>选择口径</strong>
+        <span>先选视觉和信息层级，再进入正式页面实现。</span>
+        <span>若只做样式与布局，不需要提升 contentVersion。</span>
+        <span>若后续改动分享文案、题目或结果说明，再单独确认 contentVersion。</span>
+      </div>
+    </header>
+
+    <section class="option option-a">
+      <div class="option-head">
+        <div>
+          <p class="kicker">方案 A</p>
+          <h2>档案局终端：保留暗色沉浸感，降低噪音</h2>
+          <p class="option-lead">
+            延续当前“异界档案终端”的识别度，把扫描线和高对比边框收敛，强化开始、进度、选择反馈和结果分区。适合最小风险推进，代码改动集中在 CSS 与少量 class。
+          </p>
+        </div>
+        <div class="fit">
+          <strong>适合</strong>
+          <span>想最快从当前版本打磨到更稳的移动端体验。</span>
+          <span>首页和题目页变化明显，结果页维持暗色档案卡。</span>
+        </div>
+      </div>
+      <div class="mockup-grid">
+        <div class="mockup-block">
+          <div class="mockup-title">首页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">ARCHIVE 24</span>
+                <span class="micro">default_channel</span>
+              </div>
+              <div>
+                <p class="micro">异界档案终端</p>
+                <h3 class="title">异界开局人格测试</h3>
+              </div>
+              <p class="subtitle">24 题生成你的游戏灵魂职业</p>
+              <div class="panel copy">
+                你醒来的时候，天已经黑了。手边只有一枚生锈的徽章、一张写着你名字的通缉令，和远处正在燃烧的城门。
+              </div>
+              <div class="action-row">
+                <div class="btn primary" style="flex: 1;">开始冒险</div>
+              </div>
+              <div class="btn secondary">查看规则</div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">题目页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">第一章 · 醒来</span>
+                <span class="micro">03 / 24</span>
+              </div>
+              <div class="progress"><span></span></div>
+              <h3 class="title" style="font-size: 26px;">陌生队伍邀请你同行，你第一反应是？</h3>
+              <div class="choices">
+                <div class="choice"><strong>A</strong>先确认谁能打，谁会拖后腿。</div>
+                <div class="choice is-selected"><strong>B</strong>观察队伍气氛，再决定站位。</div>
+                <div class="choice"><strong>C</strong>问清目标和报酬，别白跑。</div>
+                <div class="choice"><strong>D</strong>先跟上，路上再看有没有岔路。</div>
+              </div>
+              <div class="action-row" style="margin-top: auto;">
+                <div class="btn secondary" style="flex: 1;">上一题</div>
+                <div class="btn primary" style="flex: 1;">下一题</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">结果页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">稀有档案</span>
+                <span class="micro">NO. ARCHIVE-024</span>
+              </div>
+              <div class="avatar-stage">
+                <img src="../../assets/avatars/ATRB.png" alt="狂战士头像" />
+              </div>
+              <h3 class="result-name">狂战士</h3>
+              <p class="subtitle">你一进异界，地图先替怪物紧张。</p>
+              <div class="panel copy">
+                <strong>隐藏特质</strong><br />
+                临场爆发：越是混乱，越容易抢到先手。
+              </div>
+              <div class="mini-grid">
+                <div class="mini-cell"><strong>隐藏天赋</strong>混乱里抢先手</div>
+                <div class="mini-cell"><strong>致命弱点</strong>把警告牌当欢迎牌</div>
+              </div>
+              <div class="btn primary">生成分享图</div>
+              <div class="btn secondary">重新测试</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>首页重点</strong>减少装饰线，把第一屏重心放在标题、简短开局和开始按钮。</div>
+        <div class="note"><strong>题目重点</strong>保留章节与进度，但选择卡片更安静，选中态更明确。</div>
+        <div class="note"><strong>结果重点</strong>主结果、隐藏特质、分享动作层级更清楚。</div>
+      </div>
+    </section>
+
+    <section class="option option-b">
+      <div class="option-head">
+        <div>
+          <p class="kicker">方案 B</p>
+          <h2>人物卡卷宗：让新头像成为视觉中心</h2>
+          <p class="option-lead">
+            围绕已接入的 MBTI 人物卡式头像重建层级。整体更明亮、更像“可传播的人格卡”，但仍保留异界档案文本，不变成泛泛测试页。适合强化结果页传播和截图识别度。
+          </p>
+        </div>
+        <div class="fit">
+          <strong>适合</strong>
+          <span>想让 16 张头像资源发挥最大价值。</span>
+          <span>结果页会最明显提升，首页也会更轻、更易读。</span>
+        </div>
+      </div>
+      <div class="mockup-grid">
+        <div class="mockup-block">
+          <div class="mockup-title">首页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">24 题</span>
+                <span class="micro">游戏人格</span>
+              </div>
+              <div class="avatar-stage">
+                <img src="../../assets/avatars/AIWB.png" alt="全知探索者头像" />
+              </div>
+              <h3 class="title">异界开局人格测试</h3>
+              <p class="subtitle">从第一件装备、第一段同行、第一场危机里，生成你的游戏灵魂职业。</p>
+              <div class="btn primary">开始冒险</div>
+              <div class="split-row">
+                <div class="btn secondary" style="flex: 1;">继续上次</div>
+                <div class="btn secondary" style="flex: 1;">查看规则</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">题目页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">危机章</span>
+                <span class="micro">11 / 24</span>
+              </div>
+              <div class="progress"><span></span></div>
+              <div class="panel">
+                <p class="micro">当前抉择</p>
+                <h3 class="title" style="font-size: 25px;">宝箱旁边有明显机关，你会怎么做？</h3>
+              </div>
+              <div class="choices">
+                <div class="choice"><strong>A</strong>让队友退后，我先试一下。</div>
+                <div class="choice"><strong>B</strong>先绕一圈，找触发逻辑。</div>
+                <div class="choice is-selected"><strong>C</strong>算损耗和收益，再决定开不开。</div>
+                <div class="choice"><strong>D</strong>标记位置，等装备够了再回来。</div>
+              </div>
+              <div class="action-row" style="margin-top: auto;">
+                <div class="btn secondary" style="flex: 1;">上一题</div>
+                <div class="btn primary" style="flex: 1;">下一题</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">结果页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">异界职业档案</span>
+                <span class="micro">稳定度 83%</span>
+              </div>
+              <div class="avatar-stage">
+                <img src="../../assets/avatars/AIRC.png" alt="幕后军师头像" />
+              </div>
+              <h3 class="result-name">幕后军师</h3>
+              <p class="subtitle">你没站在前排，但局面听你的。</p>
+              <div class="panel copy">
+                <strong>短解释</strong><br />
+                你习惯先把信息拼成图，再让行动落在最稳的地方。
+              </div>
+              <div class="panel copy">
+                <strong>隐藏特质</strong><br />
+                低调控场：别人以为你没动，其实你已经排完退路。
+              </div>
+              <div class="btn primary">生成分享图</div>
+              <div class="split-row">
+                <div class="btn secondary" style="flex: 1;">复制文案</div>
+                <div class="btn secondary" style="flex: 1;">重新测试</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>首页重点</strong>用角色头像暗示“测完会拿到一张人格卡”，但开始按钮仍在第一屏。</div>
+        <div class="note"><strong>题目重点</strong>题干单独成区，减少背景干扰，选项像可点的档案条目。</div>
+        <div class="note"><strong>结果重点</strong>头像、职业名、判词、隐藏特质和分享动作形成清晰传播卡。</div>
+      </div>
+    </section>
+
+    <section class="option option-c">
+      <div class="option-head">
+        <div>
+          <p class="kicker">方案 C</p>
+          <h2>异界路线图：把 24 题做成一次开局旅程</h2>
+          <p class="option-lead">
+            强化“开局冒险”的流程感，用路线、章节和据点感组织首页与题目页。结果页像一份从旅途中结算出的职业档案。视觉沉浸更强，但正式实现需要更细地控制移动端高度。
+          </p>
+        </div>
+        <div class="fit">
+          <strong>适合</strong>
+          <span>想让测试过程更像一局开局冒险。</span>
+          <span>改动比 A、B 更大，建议选定后分两批落地。</span>
+        </div>
+      </div>
+      <div class="mockup-grid">
+        <div class="mockup-block">
+          <div class="mockup-title">首页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">开局路线</span>
+                <span class="micro">四章 · 24 题</span>
+              </div>
+              <h3 class="title">你醒在一座没有地图的城外</h3>
+              <p class="subtitle">每次选择都会把路线推向不同职业档案。</p>
+              <div class="route">
+                <span class="is-active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="panel copy">
+                第一章：醒来<br />
+                第二章：同行<br />
+                第三章：危机<br />
+                第四章：结算
+              </div>
+              <div class="btn primary" style="margin-top: auto;">开始冒险</div>
+              <div class="split-row">
+                <div class="btn secondary" style="flex: 1;">继续上次</div>
+                <div class="btn secondary" style="flex: 1;">查看规则</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">题目页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">同行路线</span>
+                <span class="micro">08 / 24</span>
+              </div>
+              <div class="route">
+                <span class="is-active"></span>
+                <span class="is-active"></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="panel">
+                <p class="micro">路口事件</p>
+                <h3 class="title" style="font-size: 25px;">队伍意见分裂，你会先处理什么？</h3>
+              </div>
+              <div class="choices">
+                <div class="choice"><strong>A</strong>先做决定，拖久了更危险。</div>
+                <div class="choice is-selected"><strong>B</strong>先确认每个人真正担心什么。</div>
+                <div class="choice"><strong>C</strong>拆成目标、资源和风险。</div>
+                <div class="choice"><strong>D</strong>换条路线，避开正面冲突。</div>
+              </div>
+              <div class="action-row" style="margin-top: auto;">
+                <div class="btn secondary" style="flex: 1;">上一题</div>
+                <div class="btn primary" style="flex: 1;">下一题</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mockup-block">
+          <div class="mockup-title">结果页</div>
+          <div class="phone">
+            <div class="phone-inner">
+              <div class="top-row">
+                <span class="tag">旅程结算</span>
+                <span class="micro">NO. ARCHIVE-024</span>
+              </div>
+              <div class="avatar-stage">
+                <img src="../../assets/avatars/PIWB.png" alt="时间旅者头像" />
+              </div>
+              <h3 class="result-name">时间旅者</h3>
+              <p class="subtitle">你不是拖延，你是在等另一条时间线变得可走。</p>
+              <div class="mini-grid">
+                <div class="mini-cell"><strong>职业谱系</strong>漫游观察位</div>
+                <div class="mini-cell"><strong>隐藏特质</strong>慢热预判</div>
+              </div>
+              <div class="panel copy">
+                你的冒险节奏不急，但总会在别人没注意的岔路上找到新的可能。
+              </div>
+              <div class="btn secondary">查看人格细节</div>
+              <div class="btn primary">生成分享图</div>
+              <div class="btn secondary">复制分享文案</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes">
+        <div class="note"><strong>首页重点</strong>第一屏直接说明测试是一次 24 题路线，不铺营销信息。</div>
+        <div class="note"><strong>题目重点</strong>章节进度从“数字”变成路线感，但仍保持触控清晰。</div>
+        <div class="note"><strong>结果重点</strong>把主结果当作旅程结算，适合后续做分享图统一风格。</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-hidden="true">
+  <rect width="960" height="420" fill="#f7f3ea"/>
+  <polygon points="0,0 280,0 0,210" fill="#efe7d8" opacity="1"/>
+  <polygon points="960,420 690,420 960,210" fill="#efe7d8" opacity="1"/>
+  <circle cx="316" cy="112" r="84" fill="#b49a5f" opacity=".12"/>
+  <circle cx="656" cy="268" r="116" fill="#d9bd78" opacity=".12"/>
+  <path d="M74 344 C260 290,386 304,548 246 S768 154,890 194" fill="none" stroke="#b49a5f" stroke-width="14" stroke-linecap="round" opacity=".16"/>
+  <g transform="rotate(1.6 480 210)">
+    <g transform="translate(128 190)">
+    <ellipse cx="46" cy="139" rx="38" ry="8" fill="#d8d2c2" opacity=".55"/>
+    <polygon points="25,88 67,88 76,128 17,128" fill="#2f3338" opacity="1"/>
+    <polygon points="34,86 58,86 52,130 29,130" fill="#b49a5f" opacity="1"/>
+    <polygon points="29,32 64,26 78,58 63,86 29,86 15,58" fill="#f0c9a5" opacity="1"/>
+    <polygon points="19,42 36,20 65,27 74,46 47,38" fill="#23272c" opacity="1"/>
+    <circle cx="38" cy="59" r="3" fill="#182026"/>
+    <circle cx="57" cy="59" r="3" fill="#182026"/>
+    <polygon points="31,130 43,130 40,151 24,151" fill="#272d32" opacity="1"/>
+    <polygon points="53,130 66,130 76,151 58,151" fill="#272d32" opacity="1"/>
+  </g><g transform="translate(470 126)"><rect x="34" y="30" width="148" height="196" rx="34" fill="#b49a5f"/><rect x="56" y="80" width="104" height="70" rx="18" fill="#2f3338" opacity=".72"/><path d="M54 28 C72 -8,144 -8,162 28" fill="none" stroke="#2f3338" stroke-width="16" stroke-linecap="round"/><circle cx="176" cy="58" r="24" fill="#b9584c"/></g>
+  </g>
+</svg>

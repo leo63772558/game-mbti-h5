@@ -1,0 +1,1 @@
+export const QUIZ_AUTO_ADVANCE_DELAY_MS = 120;

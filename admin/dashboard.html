@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>异界开局 GPTI 数据看板</title>
+    <link rel="stylesheet" href="./dashboard.css" />
+  </head>
+  <body>
+    <main class="dashboard-shell">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Analytics Dashboard</p>
+          <h1>异界开局 GPTI 数据看板</h1>
+        </div>
+        <p class="header-note">数据来自聚合表，不直接读取 analytics_events 明细；内部类型码仅用于结果分布核对。</p>
+      </header>
+
+      <form class="toolbar" id="dashboard-form">
+        <label>
+          API
+          <input id="api-endpoint" name="apiEndpoint" type="url" autocomplete="off" />
+        </label>
+        <label>
+          Token
+          <input id="dashboard-token" name="token" type="password" autocomplete="off" placeholder="输入 DASHBOARD_TOKEN" />
+        </label>
+        <label>
+          From
+          <input id="date-from" name="from" type="date" />
+        </label>
+        <label>
+          To
+          <input id="date-to" name="to" type="date" />
+        </label>
+        <label>
+          Channel
+          <input id="channel" name="channel" type="text" value="all" />
+        </label>
+        <label>
+          Host
+          <input id="host-filter" name="host" type="text" autocomplete="off" placeholder="demo-phi-pearl.vercel.app" />
+        </label>
+        <label>
+          Content Version
+          <input id="content-version" name="contentVersion" type="text" autocomplete="off" placeholder="content-2026-06-10-gpti-scoring-calibration-a" />
+        </label>
+        <button class="primary" type="submit">查询</button>
+      </form>
+
+      <section class="status-line" id="status-line">
+        默认排除 e2e_*、debug_*、test_* 测试渠道；正式复盘建议填写 Host 和 Content Version，避免不同版本数据混在一起。
+      </section>
+
+      <section class="metric-grid" aria-label="核心指标">
+        <article><span>PV</span><strong id="metric-pv">-</strong></article>
+        <article><span>UV</span><strong id="metric-uv">-</strong></article>
+        <article><span>Sessions</span><strong id="metric-sessions">-</strong></article>
+        <article><span>开始数</span><strong id="metric-start">-</strong></article>
+        <article><span>完成数</span><strong id="metric-complete">-</strong></article>
+        <article><span>完成率</span><strong id="metric-completion-rate">-</strong></article>
+        <article><span>结果页</span><strong id="metric-result-view">-</strong></article>
+        <article><span>分享相关操作</span><strong id="metric-share">-</strong></article>
+      </section>
+
+      <section class="content-grid">
+        <section class="panel panel-wide">
+          <div class="panel-head">
+            <h2>关键漏斗</h2>
+            <span id="rollup-meta">-</span>
+          </div>
+          <div class="funnel-list" id="funnel-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>分享相关操作</h2>
+          </div>
+          <table>
+            <thead>
+              <tr><th>动作</th><th>次数</th><th>会话</th></tr>
+            </thead>
+            <tbody id="share-body"></tbody>
+          </table>
+        </section>
+
+        <section class="panel panel-wide">
+          <div class="panel-head">
+            <h2>题目表现</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>题号</th>
+                <th>曝光</th>
+                <th>答题</th>
+                <th>答题率</th>
+                <th>平均耗时</th>
+                <th>选项分布 <small>当前选项：a/b/c/d</small></th>
+              </tr>
+            </thead>
+            <tbody id="question-body"></tbody>
+          </table>
+        </section>
+
+        <section class="panel panel-wide">
+          <div class="panel-head">
+            <h2>结果分布</h2>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>结果</th>
+                <th>内部类型码</th>
+                <th>完成会话</th>
+                <th>占比</th>
+                <th>平均置信度</th>
+              </tr>
+            </thead>
+            <tbody id="result-body"></tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+    <script>
+      window.GH_DASHBOARD_CONFIG = {
+        apiEndpoint: 'https://test1264-d0gzi7ut615711548-1434258997.ap-shanghai.app.tcloudbase.com/dashboard/summary',
+      };
+    </script>
+    <script type="module" src="./dashboard.mjs"></script>
+  </body>
+</html>
