@@ -1,0 +1,42 @@
+name: Import source archive
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Assemble and extract source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat source-*.bin > game-mbti-h5-main.zip
+          unzip -q game-mbti-h5-main.zip -d extracted
+          cp -a extracted/game-mbti-h5-main/. .
+          rm -rf extracted game-mbti-h5-main.zip source-*.bin part-*.bin .github/workflows/import-source.yml
+          rm -f src/.gitkeep
+
+      - name: Commit imported source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Import complete project source"
+          git push
